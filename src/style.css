@@ -3,12 +3,21 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   margin: 0;
+  color: var(--text-color);
+  transition: color var(--theme-transition), background-color var(--theme-transition);
 }
 
 :root {
-  --light-bg: #F9FAF8;
-  --white: #fff;
-  --light-grey: #DADADA;
+  /* Light mode colors */
+  --bg-color: #f9faf8;
+  --card-bg: #fff;
+  --text-color: #333;
+  --text-secondary: #666;
+  --input-bg: #dadada;
+  --shadow: rgba(0, 0, 0, 0.1);
+
+  /* Transition timing */
+  --theme-transition: 0.3s ease;
 
   /* Shades of blue */
   --federal-blue: #03045eff;
@@ -22,11 +31,38 @@
   --light-cyan: #caf0f8ff;
 }
 
+/* Dark mode colors */
+[data-theme="dark"] {
+  --bg-color: #1a1a1a;
+  --card-bg: #2d2d2d;
+  --text-color: #f0f0f0;
+  --text-secondary: #b0b0b0;
+  --input-bg: #404040;
+  --shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* Dark mode SVG filters */
+[data-theme="dark"] .info-group img {
+  filter: invert(1) brightness(0.9);
+}
+
+/* Optional: Different filter for weather icons */
+[data-theme="dark"] .weather-icon {
+  filter: brightness(0.9) contrast(1.1);
+}
+
+/* Add transition for all SVGs */
+.info-group img,
+.weather-icon {
+  transition: filter var(--theme-transition);
+}
+
 body,
 html {
   height: 100%;
-  background-color: var(--light-bg);
+  background-color: var(--bg-color);
   margin: 0;
+  transition: background-color var(--theme-transition);
 }
 
 main {
@@ -34,7 +70,8 @@ main {
   justify-content: center;
   align-items: center;
   padding: 2rem;
-  height: 100%;
+  height: max-content;
+  min-height: 100%;
 }
 
 #app {
@@ -42,15 +79,18 @@ main {
   flex-direction: column;
   gap: 1rem;
   width: 75vw;
-  background-color: var(--white);
+  background-color: var(--card-bg);
   border-radius: 0.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 8px var(--shadow);
   padding: 3rem;
   text-align: center;
+  transition: background-color var(--theme-transition), box-shadow var(--theme-transition);
 }
 
 .title {
-  font-size: 2.25rem;
+  font-size: 2.5rem;
+  line-height: 1;
+  min-width: max-content;
 }
 
 form {
@@ -66,8 +106,21 @@ form {
 
   form input {
     min-height: 3rem;
+  }
 
-}
+  main {
+    padding: 1rem;
+  }
+
+  #app {
+    padding: 2rem;
+    width: 100%;
+  }
+
+  .secondary-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 form > * {
@@ -79,7 +132,7 @@ form input {
 }
 
 form button {
-  flex: 1 1 25%;;
+  flex: 1 1 25%;
 }
 
 #search {
@@ -87,8 +140,10 @@ form button {
   height: 3rem;
   padding: 0 1rem;
   border-radius: 0.5rem;
-  background-color: var(--light-grey);
+  background-color: var(--input-bg);
+  color: var(--text-color);
   font-size: 1.125rem;
+  transition: background-color var(--theme-transition), color var(--theme-transition);
 }
 
 .submitBtn {
@@ -96,7 +151,7 @@ form button {
   padding: 0.5rem 2rem;
   border-radius: 0.5rem;
   background-color: var(--marian-blue);
-  color: var(--white);
+  color: #fff;
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -139,7 +194,7 @@ form button {
 
 .secondary-info {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(75px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 1rem;
   align-items: center;
 }
@@ -150,13 +205,11 @@ form button {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  min-width: max-content
-
+  min-width: max-content;
 }
 
 .info-group img {
   height: 3rem;
-
 }
 
 h3 {
