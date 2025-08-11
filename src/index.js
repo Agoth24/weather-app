@@ -5,8 +5,7 @@ import { celsiusToFahrenheit } from "./unitConverter";
 import { fahrenheitToCelsius } from "./unitConverter";
 import getTimeWithOffset from "./getTimeWithOffset";
 let unit = "C";
-let theme = 'light'
-
+let theme = "dark";
 
 const form = document.querySelector("form");
 const searchInput = document.querySelector("#search");
@@ -21,7 +20,7 @@ form.addEventListener("submit", async (e) => {
       renderWeatherSection(parseWeatherData(weatherData), unit);
     }
   }
-  searchInput.value = ""
+  searchInput.value = "";
 });
 
 async function getWeatherInfo(location) {
@@ -29,11 +28,11 @@ async function getWeatherInfo(location) {
     const response = await fetch(
       `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&key=9MHVYPDZHDF6Q88W7JB5KUQVL&contentType=json`
     );
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     const weatherData = await response.json();
     return weatherData;
   } catch (error) {
@@ -44,14 +43,14 @@ async function getWeatherInfo(location) {
 
 function parseWeatherData(data) {
   const currentData = data.currentConditions;
-  
+
   // Determine if it's day or night based on local time
   const localHour = getLocalHour(data.tzoffset);
   const isDaytime = localHour >= 5 && localHour < 20; // 6 AM to 6 PM is day
-  
+
   // Set theme based on time
   setThemeBasedOnTime(isDaytime);
-  
+
   return {
     city: data.resolvedAddress,
     iconURL: getIcon(currentData.icon),
@@ -67,7 +66,7 @@ function parseWeatherData(data) {
     isDaytime: isDaytime, // Add this for debugging
   };
 }
-// 
+//
 function getLocalHour(offsetHrs) {
   const now = new Date();
   const utcHours = now.getUTCHours();
@@ -76,15 +75,14 @@ function getLocalHour(offsetHrs) {
 }
 
 function setThemeBasedOnTime(isDaytime) {
-  theme = isDaytime ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', theme);
+  theme = isDaytime ? "light" : "dark";
+  changeTheme(theme);
   console.log(`Theme set to: ${theme} (isDaytime: ${isDaytime})`);
 }
 
-function changeTheme() {
-  theme = theme === 'light' ? 'dark' : 'light';
-  document.documentElement.setAttribute('data-theme', theme);
+function changeTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
 }
 
 // Apply theme on page load
-document.documentElement.setAttribute('data-theme', theme);
+document.documentElement.setAttribute("data-theme", theme);
