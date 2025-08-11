@@ -56,5 +56,50 @@ export default function renderWeatherSection(weatherData, unit = "C") {
   descriptionText.textContent = description;
   descriptionText.classList.add("desc");
 
+  const secondaryInfo = document.createElement("div");
+  secondaryInfo.classList.add("secondary-info");
+
+  // Create info groups
+  const infoGroup = (label, iconSrc, value) => {
+    const group = document.createElement("div");
+    group.classList.add("info-group");
+
+    const labelText = document.createElement("h3");
+    labelText.textContent = label;
+
+    const icon = document.createElement("img");
+    icon.src = iconSrc;
+
+    const valueText = document.createElement("p");
+    valueText.textContent = value;
+
+    group.append(labelText, valueText);
+    return group;
+  };
+
+  const feelsLikeGroup = infoGroup(
+    "Feels Like",
+    "svgs/temperature-list-svgrepo-com.svg",
+    `${feelsLike}°${unit}`
+  );
+
+  const popGroup = infoGroup(
+    "P.O.P.",
+    "svgs/cloud-rain-svgrepo-com.svg",
+    `${pop}%`
+  );
+  const humidityGroup = infoGroup(
+    "Humidity",
+    "svgs/humidity-svgrepo-com.svg",
+    `${humidity}%`
+  );
+  const uvIndexGroup = infoGroup(
+    "UV Index",
+    "svgs/uv-index-svgrepo-com.svg",
+    `${uvIndex}`
+  );
+
+  secondaryInfo.append(feelsLikeGroup, popGroup, humidityGroup, uvIndexGroup);
+
   return weatherSection;
 }
