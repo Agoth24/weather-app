@@ -19,6 +19,7 @@ form.addEventListener("submit", async (e) => {
       renderWeatherSection(parseWeatherData(weatherData), unit);
     }
   }
+  searchInput.value = ""
 });
 
 async function getWeatherInfo(location) {
