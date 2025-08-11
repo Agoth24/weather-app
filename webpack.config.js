@@ -11,6 +11,7 @@ module.exports = {
   ],
   output: {
     filename: `main.js`,
+    publicPath: `/weather-app/`, 
     path: path.resolve(__dirname, "dist"),
     clean: true,
   },
