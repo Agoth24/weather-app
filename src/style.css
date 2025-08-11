@@ -32,7 +32,9 @@ html {
 main {
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 2rem;
+  height: 100%;
 }
 
 #app {
@@ -63,7 +65,7 @@ form {
   }
 
   form input {
-    min-height: 2.5rem;
+    min-height: 3rem;
 
 }
 }
