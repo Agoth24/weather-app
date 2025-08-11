@@ -1,20 +1,23 @@
 import "./style.css";
 import renderWeatherSection from "./renderWeatherSection";
 import getIcon from "./getIcon";
-import { celsiusToFahrenheit } from "./unitConverter"; 
+import { celsiusToFahrenheit } from "./unitConverter";
 import { fahrenheitToCelsius } from "./unitConverter";
 import getTimeWithOffset from "./getTimeWithOffset";
-let unit = 'C'
-
+let unit = "C";
 
 const form = document.querySelector("form");
 const searchInput = document.querySelector("#search");
-form.addEventListener("submit", (e) => {
+form.addEventListener("submit", async (e) => {
   const location = searchInput.value;
+
   e.preventDefault();
   if (location) {
     console.log(`Searching for weather in ${location}`);
-    getWeatherInfo(location);
+    const weatherData = await getWeatherInfo(location);
+    if (weatherData) {
+      renderWeatherSection(parseWeatherData(weatherData), unit);
+    }
   }
 });
 
@@ -31,7 +34,7 @@ async function getWeatherInfo(location) {
 }
 
 function parseWeatherData(data) {
-    const currentData = data.currentConditions
+  const currentData = data.currentConditions;
   return {
     city: data.resolvedAddress,
     iconURL: getIcon(currentData.icon),
@@ -43,9 +46,6 @@ function parseWeatherData(data) {
     pop: currentData.precipprob,
     uvIndex: currentData.uvindex,
     humidity: currentData.humidity,
+    currentConditions: currentData, // Add this property for compatibility
   };
 }
-
-getWeatherInfo("toronto").then(weatherData => {if (weatherData) {
-    console.log(parseWeatherData(weatherData))
-}})

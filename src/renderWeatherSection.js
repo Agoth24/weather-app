@@ -1,3 +1,8 @@
+import temperatureIcon from './svgs/temperature-list-svgrepo-com.svg';
+import rainIcon from './svgs/cloud-rain-svgrepo-com.svg';
+import humidityIcon from './svgs/humidity-svgrepo-com.svg';
+import uvIcon from './svgs/uv-index-svgrepo-com.svg';
+
 export default function renderWeatherSection(weatherData, unit = "C") {
   const weatherSection = document.querySelector(".weather-section");
   weatherSection.replaceChildren(); // Clear previous content
@@ -27,7 +32,7 @@ export default function renderWeatherSection(weatherData, unit = "C") {
 
   const cityNameAndTime = document.createElement("div");
   const cityName = document.createElement("h2");
-  cityName.textContent = city;
+  cityName.textContent = city.charAt(0).toUpperCase() + city.slice(1);
   cityName.classList.add("city-name");
 
   const cityTime = document.createElement("p");
@@ -39,8 +44,9 @@ export default function renderWeatherSection(weatherData, unit = "C") {
   const mainInfo = document.createElement("div");
   mainInfo.classList.add("main-info");
 
-  const icon = document.createElement("img");
-  icon.src = iconURL;
+  const currentWeatherIcon = document.createElement("img");
+  currentWeatherIcon.src = iconURL;
+  currentWeatherIcon.classList.add("weather-icon");
 
   const currentTemp = document.createElement("p");
   currentTemp.textContent = `${temperature}°${unit}`;
@@ -50,7 +56,7 @@ export default function renderWeatherSection(weatherData, unit = "C") {
   conditionsText.textContent = conditions;
   conditionsText.classList.add("conditions");
 
-  mainInfo.append(icon, currentTemp, conditionsText);
+  mainInfo.append(currentWeatherIcon, currentTemp, conditionsText);
 
   const descriptionText = document.createElement("p");
   descriptionText.textContent = description;
@@ -73,33 +79,40 @@ export default function renderWeatherSection(weatherData, unit = "C") {
     const valueText = document.createElement("p");
     valueText.textContent = value;
 
-    group.append(labelText, valueText);
+    group.append(labelText, icon, valueText);
     return group;
   };
 
   const feelsLikeGroup = infoGroup(
     "Feels Like",
-    "svgs/temperature-list-svgrepo-com.svg",
+    temperatureIcon,
     `${feelsLike}°${unit}`
   );
 
   const popGroup = infoGroup(
     "P.O.P.",
-    "svgs/cloud-rain-svgrepo-com.svg",
+    rainIcon,
     `${pop}%`
   );
   const humidityGroup = infoGroup(
     "Humidity",
-    "svgs/humidity-svgrepo-com.svg",
+    humidityIcon,
     `${humidity}%`
   );
   const uvIndexGroup = infoGroup(
     "UV Index",
-    "svgs/uv-index-svgrepo-com.svg",
+    uvIcon,
     `${uvIndex}`
   );
 
   secondaryInfo.append(feelsLikeGroup, popGroup, humidityGroup, uvIndexGroup);
+
+  weatherSection.append(
+    cityNameAndTime,
+    mainInfo,
+    descriptionText,
+    secondaryInfo
+  );
 
   return weatherSection;
 }

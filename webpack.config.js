@@ -1,5 +1,6 @@
 const path = require("path");
 const HTMLWebpackPlugin = require(`html-webpack-plugin`);
+const { type } = require("os");
 module.exports = {
   mode: `development`,
   entry: "./src/index.js",
@@ -44,7 +45,11 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(png|jpe?g|gif|svg)$/i,
+        test: /\.(png|jpe?g|gif)$/i,
+        type: "asset/resource",
+      },
+      {
+        test: /\.svg$/i,
         type: "asset/resource",
       },
       {
