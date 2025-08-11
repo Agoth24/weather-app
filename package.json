@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.config.js --mode production",
-    "start": "webpack serve --config webpack.config.js --open --mode development"
+    "start": "webpack serve --config webpack.config.js --open --mode development",
+    "deploy": "npm run build && echo 'Build complete. Deploy the dist/ folder to your hosting service.'"
   },
   "repository": {
     "type": "git",

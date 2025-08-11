@@ -26,10 +26,16 @@ async function getWeatherInfo(location) {
     const response = await fetch(
       `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&key=9MHVYPDZHDF6Q88W7JB5KUQVL&contentType=json`
     );
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
     const weatherData = await response.json();
     return weatherData;
   } catch (error) {
     console.error("Error fetching weather data:", error);
+    return null;
   }
 }
 
@@ -46,6 +52,6 @@ function parseWeatherData(data) {
     pop: currentData.precipprob,
     uvIndex: currentData.uvindex,
     humidity: currentData.humidity,
-    currentConditions: currentData, // Add this property for compatibility
+    currentConditions: currentData,
   };
 }
