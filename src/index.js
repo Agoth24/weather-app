@@ -34,15 +34,18 @@ function parseWeatherData(data) {
     const currentData = data.currentConditions
   return {
     city: data.resolvedAddress,
-    iconCode: currentData.icon,
+    iconURL: getIcon(currentData.icon),
     time: getTimeWithOffset(data.tzoffset),
     description: data.description,
     conditions: currentData.conditions,
     temperature: currentData.temp,
     feelsLike: currentData.feelslike,
+    pop: currentData.precipprob,
+    uvIndex: currentData.uvindex,
+    humidity: currentData.humidity,
   };
 }
 
-(getWeatherInfo("toronto")).then(weatherData => {if (weatherData) {
+getWeatherInfo("toronto").then(weatherData => {if (weatherData) {
     console.log(parseWeatherData(weatherData))
 }})
