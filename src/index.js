@@ -46,13 +46,13 @@ function parseWeatherData(data) {
 
   // Determine if it's day or night based on local time
   const localHour = getLocalHour(data.tzoffset);
-  const isDaytime = localHour >= 5 && localHour < 20; // 6 AM to 6 PM is day
+  const isDaytime = localHour >= 5 && localHour < 20;
 
   // Set theme based on time
   setThemeBasedOnTime(isDaytime);
 
   return {
-    city: data.resolvedAddress,
+    city: data.address,
     iconURL: getIcon(currentData.icon),
     time: getTimeWithOffset(data.tzoffset),
     description: data.description,
