@@ -1,5 +1,7 @@
 # Weather App
 
+[See it Live](https://agoth24.github.io/weather-app/)
+
 A simple weather application that fetches and displays current weather data for a specified location using the Visual Crossing Weather API.
 ## Features
 - Fetches current weather data from Visual Crossing Weather API.
