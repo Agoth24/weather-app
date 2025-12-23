@@ -5,7 +5,7 @@ import { celsiusToFahrenheit } from "./unitConverter";
 import { fahrenheitToCelsius } from "./unitConverter";
 import getTimeWithOffset from "./getTimeWithOffset";
 let unit = "C";
-let theme = "dark";
+let theme = document.documentElement.getAttribute("data-theme") || "dark";
 
 const form = document.querySelector("form");
 const searchInput = document.querySelector("#search");
@@ -82,7 +82,9 @@ function setThemeBasedOnTime(isDaytime) {
 
 function changeTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem("theme", theme);
 }
 
-// Apply theme on page load
-document.documentElement.setAttribute("data-theme", theme);
+if (!document.documentElement.hasAttribute("data-theme")) {
+  document.documentElement.setAttribute("data-theme", theme);
+}
