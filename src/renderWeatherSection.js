@@ -49,7 +49,7 @@ export default function renderWeatherSection(weatherData, unit = "C") {
   currentWeatherIcon.classList.add("weather-icon");
 
   const currentTemp = document.createElement("p");
-  currentTemp.textContent = `${temperature}°${unit}`;
+  currentTemp.textContent = `${Math.round(temperature)}°${unit}`;
   currentTemp.classList.add("current-temp");
 
   const conditionsText = document.createElement("p");
