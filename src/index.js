@@ -5,7 +5,7 @@ import { celsiusToFahrenheit } from "./unitConverter";
 import { fahrenheitToCelsius } from "./unitConverter";
 import getTimeWithOffset from "./getTimeWithOffset";
 let unit = "C";
-let theme = document.documentElement.getAttribute("data-theme") || "dark";
+let theme = "dark"
 
 const form = document.querySelector("form");
 const searchInput = document.querySelector("#search");
